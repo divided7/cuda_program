@@ -2,7 +2,7 @@
 cuda编程
 ## 准备工作
 * 确保nvcc可用，命令行使用`nvcc --version`，如果正常提示版本则没有问题
-* 如果不存在，则安装cuda-tooklit;如果torch可以正常使用cuda大概率是path路径问题，配置一下path（Linux在~/.bashrc中添加export PATH="/usr/local/cuda/bin:$PATH"
+* 如果不存在，则安装cuda-tooklit;如果torch可以正常使用cuda大概率是path路径问题，配置一下path（Linux在~/.bashrc中添加`export PATH="/usr/local/cuda/bin:$PATH"`
   需要自行检查一下cuda路径是否正确）
 ## 1 向量加法
 伪代码如下:
