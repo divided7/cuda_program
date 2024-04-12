@@ -10,15 +10,15 @@ cuda编程
 ∕∕ Kernel definition
 __global__ void VecAdd(float* A, float* B, float* C)
 {
-int i = threadIdx.x; // threadIdx.x 是一个从 0 开始的整数，表示当前线程在其线程块中的索引。当你在一个线程块中启动一个 CUDA 核函数时，threadIdx.x 会为每个线程分配一个唯一的索引。这些索引从 0 开始，逐个增加，直到线程块中的最后一个线程。
-C[i] = A[i] + B[i];
+  int i = threadIdx.x; // threadIdx.x 是一个从 0 开始的整数，表示当前线程在其线程块中的索引。当你在一个线程块中启动一个 CUDA 核函数时，threadIdx.x 会为每个线程分配一个唯一的索引。这些索引从 0 开始，逐个增加，直到线程块中的最后一个线程。
+  C[i] = A[i] + B[i];
 }
 int main()
 {
-...
-∕∕ Kernel invocation with N threads
-VecAdd<<<1, N>>>(A, B, C); // 这里的1是指线程块的数量，N是指每个线程块中的线程数量。在3080Ti上最大线程数量N为1024
-...
+  ...
+  ∕∕ Kernel invocation with N threads
+  VecAdd<<<1, N>>>(A, B, C); // 这里的1是指线程块的数量，N是指每个线程块中的线程数量。在3080Ti上最大线程数量N为1024
+  ...
 }
 ```
 实际实现参考:
