@@ -34,18 +34,18 @@ nvcc -o vecAdd vecAdd.cu && ./vecAdd && rm -rf vecAdd
 __global__ void MatAdd(float A[N][N], float B[N][N],
 float C[N][N])
 {
-int i = threadIdx.x;
-int j = threadIdx.y;
-C[i][j] = A[i][j] + B[i][j];
+  int i = threadIdx.x;
+  int j = threadIdx.y;
+  C[i][j] = A[i][j] + B[i][j];
 }
 int main()
 {
-...
-∕∕ Kernel invocation with one block of N * N * 1 threads
-int numBlocks = 1;
-dim3 threadsPerBlock(N, N);
-MatAdd<<<numBlocks, threadsPerBlock>>>(A, B, C);
-...
+  ...
+  ∕∕ Kernel invocation with one block of N * N * 1 threads
+  int numBlocks = 1;
+  dim3 threadsPerBlock(N, N);
+  MatAdd<<<numBlocks, threadsPerBlock>>>(A, B, C);
+  ...
 }
 ```
 threadIdx.x是一个 dim3 结构体，包含三个成员 x、y 和 z，分别用于表示线程在 x、y 和 z 维度上的索引。也就是说，即使我计算两个10*10尺寸的矩阵加法，但是调用的cuda是一个1*100形状的计算单元。如果希望以10*10的计算单元形状，需要指定线程块数量10，每个线程块的线程数量为10。
@@ -57,18 +57,18 @@ threadIdx.x是一个 dim3 结构体，包含三个成员 x、y 和 z，分别用
 __global__ void MatAdd(float A[N][N], float B[N][N],
 float C[N][N])
 {
-int i = blockIdx.x * blockDim.x + threadIdx.x;
-int j = blockIdx.y * blockDim.y + threadIdx.y;
-if (i < N && j < N)
-C[i][j] = A[i][j] + B[i][j];
+  int i = blockIdx.x * blockDim.x + threadIdx.x;
+  int j = blockIdx.y * blockDim.y + threadIdx.y;
+  if (i < N && j < N)
+  C[i][j] = A[i][j] + B[i][j];
 }
 int main()
 {
-...
-∕∕ Kernel invocation
-dim3 threadsPerBlock(16, 16);
-dim3 numBlocks(N ∕ threadsPerBlock.x, N ∕ threadsPerBlock.y);
-MatAdd<<<numBlocks, threadsPerBlock>>>(A, B, C);
-...
+  ...
+  ∕∕ Kernel invocation
+  dim3 threadsPerBlock(16, 16);
+  dim3 numBlocks(N ∕ threadsPerBlock.x, N ∕ threadsPerBlock.y);
+  MatAdd<<<numBlocks, threadsPerBlock>>>(A, B, C);
+  ...
 }
 ```
