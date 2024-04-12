@@ -17,7 +17,7 @@ int main()
 {
 ...
 ∕∕ Kernel invocation with N threads
-VecAdd<<<1, N>>>(A, B, C);
+VecAdd<<<1, N>>>(A, B, C); // 这里的1是指线程块的数量，N是指每个线程块中的线程数量。在3080Ti上最大线程数量N为1024
 ...
 }
 ```
